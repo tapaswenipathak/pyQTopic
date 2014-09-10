@@ -1,0 +1,46 @@
+=====
+qtopic
+=====
+
+A Python module to fetch and parse data Topic related data from Quora.
+
+Installation
+============
+
+Install using pip:
+
+    pip install qtopic
+
+Usage
+=====
+
+    from qtopic import QTopic
+
+    best_questions = QTopic.get_best_questions ('Computer-Programming')
+    
+    #do stuff with the parsed data
+    best_questions['links']
+    best_questions['title']
+    best_questions['published']
+
+
+Features
+========
+
+Currently implemented
+---------------------
+
+* Follower Count
+* Some followers name 
+* Related Topics
+* Feed last updated
+* Best questions
+* Top Stories
+    breaked down links, title, published. 
+* Open question
+    breaked down links, title, published. 
+
+Todo
+----
+
+* Information to be stored in a better way. 
