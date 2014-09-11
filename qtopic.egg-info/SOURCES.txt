@@ -1,0 +1,9 @@
+README
+setup.py
+qtopic/__init__.py
+qtopic/pyqtopic.py
+qtopic.egg-info/PKG-INFO
+qtopic.egg-info/SOURCES.txt
+qtopic.egg-info/dependency_links.txt
+qtopic.egg-info/requires.txt
+qtopic.egg-info/top_level.txt

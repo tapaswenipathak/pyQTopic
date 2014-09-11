@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: qtopic
+Version: 0.1.0
+Summary: Fetches and parses topic related data from Quora.
+Home-page: https://github.com/tapasweni-pathak/pyQTopic
+Author: Tapasweni Pathak
+Author-email: tapaswenipathak@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
