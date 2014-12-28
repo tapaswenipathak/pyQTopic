@@ -47,3 +47,5 @@ best_questions['published']
 
 ### Todo
 * Information to be stored in a better way.  
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/tapasweni-pathak/pyqtopic/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
