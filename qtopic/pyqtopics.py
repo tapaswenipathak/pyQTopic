@@ -43,7 +43,7 @@ class QTopic :
    	url = "https://www.quora.com/" + topic 
 	html_doc = urllib2.urlopen (url)
 	soup = BeautifulSoup (html_doc.read ())
-	raw_data = str (soup.find_all ('div', class_='RelatedTopicsSection row section related_topics'))
+	raw_data = str (soup.find_all ('div', class_='RelatedTopicFaqsSection RelatedTopicsSection'))
 	soup = BeautifulSoup (raw_data)
 	raw_data = str (soup.find_all ('span',class_='TopicName'))
 	soup = BeautifulSoup (raw_data)
