@@ -56,15 +56,6 @@ class QTopic:
         return dict
 
     @staticmethod
-    def get_last_updated(topic):
-        url = "http://www.quora.com/" + topic + "/best_questions/rss"
-        dict = {
-            'topic': topic,
-            'last_updated': f.feed.updated
-        }
-        return dict
-
-    @staticmethod
     def get_best_questions(topic):
         url = "http://www.quora.com/" + topic + "/best_questions/rss"
         f = feedparser.parse(url)
