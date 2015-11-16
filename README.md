@@ -26,7 +26,7 @@ followers_count = QTopic.get_follower_count ('Computer-Programming')
     
 #do stuff with the parsed data
 followers_count['followers']
-followers_count['title']
+followers_count['topic']
 
 ```
 
