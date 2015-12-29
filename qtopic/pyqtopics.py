@@ -13,7 +13,7 @@ class QTopic:
     @staticmethod
     def get_follower_count(topic):
         url = "https://www.quora.com/" + topic
-        topic=topic.replace(" ","-")
+        topic = topic.replace(" ","-")
         html_doc = urllib2.urlopen(url)
         soup = BeautifulSoup(html_doc.read())
         raw_data =soup.find('a',{'class':'TopicFollowersStatsRow StatsRow'})
