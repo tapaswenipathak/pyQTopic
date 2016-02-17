@@ -22,12 +22,11 @@ Install using pip:
 
 from qtopic import QTopic
 
-best_questions = QTopic.get_best_questions ('Computer-Programming')
+followers_count = QTopic.get_follower_count ('Computer-Programming')
     
 #do stuff with the parsed data
-best_questions['links']
-best_questions['title']
-best_questions['published']
+followers_count['followers']
+followers_count['topic']
 
 ```
 
@@ -37,8 +36,6 @@ best_questions['published']
 * Follower Count
 * Some followers name 
 * Related Topics
-* Feed last updated
-* Best questions
 * Top Stories
     breaked down links, title, published. 
 * Open question
@@ -47,5 +44,6 @@ best_questions['published']
 
 ### Todo
 * Information to be stored in a better way.  
+* Add most viewed writer
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/tapasweni-pathak/pyqtopic/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
