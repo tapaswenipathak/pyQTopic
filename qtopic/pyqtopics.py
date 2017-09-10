@@ -13,14 +13,14 @@ class QTopic:
     @staticmethod
     def get_follower_count(topic):
         url = "https://www.quora.com/" + topic
+        topic = topic.replace(" ","-")
         html_doc = urllib2.urlopen(url)
         soup = BeautifulSoup(html_doc.read())
-        raw_data = str(soup.find_all('span', class_="count"))
-        soup = BeautifulSoup(raw_data)
-        followers = soup.find_all('span')[0].get_text()
+        raw_data = soup.find('a',{'class':'TopicFollowersStatsRow StatsRow'})
+        follower_count = str(raw_data.find('strong').text)
         dict = {
             'topic': topic,
-            'followers': followers,
+            'followers': follower_count
         }
         return dict
 
@@ -87,3 +87,31 @@ class QTopic:
             'topic': topic,
         }
         return dict
+    @staticmethod
+    def  get_top_writers (topic) :
+    name = []
+    view_count = []
+    answer_count = []
+    topic=topic.replace(" ","-")
+    url = "https://www.quora.com/" + topic + "/writers"
+    try:
+        x = urllib2.urlopen(url).read()
+        soup = BeautifulSoup(x)
+        list_item = soup.find_all('div',{'class':'LeaderboardListItem'})
+        for item in list_item:
+            try:     
+                    view_count.append(str(item.find('div',{'class':'num'}).text))
+                    name.append(str(item.find('a',{'class':'answers_link'},href=True)['href']).split('/')[2].replace("-"," "))
+                    answer_count.append(str(item.find('a',{'class':'answers_link'}).text.split(" ")[1]))
+
+            except(UnicodeEncodeError,AttributeError):
+                  continue
+        dict={'name':name,
+            'view_count':view_count,
+            'answer_count':answer_count}    
+        return dict      
+    except urllib2.HTTPError,e:
+        if e.code == 404:
+           print "Top Writers info unavailable for this topic"
+        else:
+            print "Sorry!Unable to get the required info"    
