@@ -57,25 +57,6 @@ class QTopic:
         }
         return dict
 
-    """@staticmethod
-    def get_top_stories(topic):
-        url = "http://www.quora.com/" + topic + "/rss"
-        f = feedparser.parse(url)
-        feed_len = len(f.entries)
-        links = []
-        title = []
-        published = []
-        for i in range(feed_len):
-            links.append(f['entries'][i]['links'][0]['href'])
-            title.append(f['entries'][i]['title'])
-            published.append(f['entries'][i]['published'])
-        dict = {
-            'links': links,
-            'title': title,
-            'published': published
-        }
-        return dict"""
-
     @staticmethod
     def get_open_questions(topic):
         http = urllib3.PoolManager()
