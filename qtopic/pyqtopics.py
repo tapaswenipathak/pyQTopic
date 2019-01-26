@@ -1,61 +1,63 @@
-import urllib2
+import urllib3
 from bs4 import BeautifulSoup
-import feedparser
-import re
 
-
-####################################################################
-# API
-####################################################################
 
 class QTopic:
 
     @staticmethod
     def get_follower_count(topic):
-        url = "https://www.quora.com/" + topic
         topic = topic.replace(" ","-")
-        html_doc = urllib2.urlopen(url)
-        soup = BeautifulSoup(html_doc.read())
-        raw_data = soup.find('a',{'class':'TopicFollowersStatsRow StatsRow'})
-        follower_count = str(raw_data.find('strong').text)
+        http = urllib3.PoolManager()
+        topic = topic.replace(" ","-")
+        url = "https://www.quora.com/topic/" + topic
+        res = http.request('GET', url)
+        sun = (res.data)
+        soup = BeautifulSoup(sun, "html.parser")
+        des = soup.find("a", {"class" : "TopicFollowersStatsRow"})
+        follower_count = des.strong
         dict = {
             'topic': topic,
-            'followers': follower_count
+            'followers': follower_count.string.encode("utf-8")
         }
-        return dict
+        return(dict)
 
     @staticmethod
     def get_some_followers(topic):
-        url = "http://www.quora.com/" + topic + "/followers"
-        html_doc = urllib2.urlopen(url)
-        soup = BeautifulSoup(html_doc.read())
-        raw_data = str(soup.find_all('a', class_='user'))
-        soup = BeautifulSoup(raw_data)
+        http = urllib3.PoolManager()
+        topic = topic.replace(" ","-")
+        url = "http://www.quora.com/topic/" + topic + "/followers"
+        html_doc= http.request('GET', url)
+        res = (html_doc.data)
+        soup = BeautifulSoup(res, "html.parser")
+        data = str(soup.find_all('a', class_='user'))
+        soup = BeautifulSoup(data)
         name = soup.get_text()
         dict = {
-            'name': name,
             'topic': topic,
+            'name':  name.encode("utf-8"),
         }
-        return dict
+        return(dict)
 
     @staticmethod
     def get_related_topics(topic):
-        url = "https://www.quora.com/" + topic
-        html_doc = urllib2.urlopen(url)
-        soup = BeautifulSoup(html_doc.read())
-        raw_data = str(soup.find_all(
-            'div', class_='RelatedTopicFaqsSection RelatedTopicsSection'))
-        soup = BeautifulSoup(raw_data)
-        raw_data = str(soup.find_all('span', class_='TopicName'))
-        soup = BeautifulSoup(raw_data)
-        related_topics = soup.get_text()
+        http = urllib3.PoolManager()
+        topic = topic.replace(" ","-")
+        url = "http://www.quora.com/topic/" + topic
+        html_doc= http.request('GET', url)
+        res = (html_doc.data)
+        soup = BeautifulSoup(res, "html.parser")
+        data = str(soup.find_all('div', class_='section_wrapper'))
+        soup = BeautifulSoup(data)
+        data = str(soup.find_all('span', class_='TopicName'))
+        soup = BeautifulSoup(data)
+        name = soup.get_text()
         dict = {
             'topic': topic,
-            'related_topics': related_topics,
+            'name':  name,#.encode("utf-8"),
         }
         return dict
 
-    @staticmethod
+    """@staticmethod
     def get_top_stories(topic):
         url = "http://www.quora.com/" + topic + "/rss"
         f = feedparser.parse(url)
@@ -72,46 +74,52 @@ class QTopic:
             'title': title,
             'published': published
         }
-        return dict
+        return dict"""
 
     @staticmethod
     def get_open_questions(topic):
-        url = "http://www.quora.com/" + topic + "/questions"
-        html_doc = urllib2.urlopen(url)
-        soup = BeautifulSoup(html_doc.read())
-        raw_data = str(soup.find_all('div', class_='QuestionText'))
-        soup = BeautifulSoup(raw_data)
-        title = soup.get_text()
+        http = urllib3.PoolManager()
+        topic = topic.replace(" ","-")
+        url = "http://www.quora.com/topic/" + topic + "/top_questions"
+        html_doc= http.request('GET', url)
+        res = (html_doc.data)
+        soup = BeautifulSoup(res, "html.parser")
+        data = str(soup.find_all('span', class_='ui_qtext_rendered_qtext'))
+        soup = BeautifulSoup(data)
+        name = soup.get_text()
         dict = {
-            'question_titles': title,
             'topic': topic,
+            'name':  name,
         }
         return dict
-    @staticmethod
-    def  get_top_writers (topic) :
-    name = []
-    view_count = []
-    answer_count = []
-    topic=topic.replace(" ","-")
-    url = "https://www.quora.com/" + topic + "/writers"
-    try:
-        x = urllib2.urlopen(url).read()
-        soup = BeautifulSoup(x)
-        list_item = soup.find_all('div',{'class':'LeaderboardListItem'})
-        for item in list_item:
-            try:     
-                    view_count.append(str(item.find('div',{'class':'num'}).text))
-                    name.append(str(item.find('a',{'class':'answers_link'},href=True)['href']).split('/')[2].replace("-"," "))
-                    answer_count.append(str(item.find('a',{'class':'answers_link'}).text.split(" ")[1]))
 
-            except(UnicodeEncodeError,AttributeError):
-                  continue
-        dict={'name':name,
-            'view_count':view_count,
-            'answer_count':answer_count}    
-        return dict      
-    except urllib2.HTTPError,e:
-        if e.code == 404:
-           print "Top Writers info unavailable for this topic"
-        else:
-            print "Sorry!Unable to get the required info"    
+        
+    @staticmethod
+    def get_top_writers(topic):
+        name = []
+        view_count = []
+        answer_count = []
+        links = []
+        http = urllib3.PoolManager()
+        topic = topic.replace(" ","-")
+        url = "http://www.quora.com/topic/" + topic + "/writers"
+        html_doc= http.request('GET', url)
+        res = (html_doc.data)
+        soup = BeautifulSoup(res, "html.parser")
+        data = (str(soup.find_all('a', class_='Leaderboard')))
+        user_data = str(soup.find_all('a', class_='user'))
+        view = str(soup.find_all('div', class_='num'))
+        link = str(soup.find_all('a', class_='answers_link', href=True))
+        name.append((BeautifulSoup(user_data)).get_text())
+        view_count.append((BeautifulSoup(view)).get_text())
+        links.append((BeautifulSoup(link)))
+        answer_count.append((BeautifulSoup(link)).get_text())
+    
+        dict = {
+            'topic': topic,
+            'name':  name,
+            'view_count': view_count,
+            'links': links,
+            'answer_count': answer_count
+        }
+        return dict
