@@ -4,7 +4,7 @@ A Python module to fetch and parse Topics related data from Quora.
 
 ### Projects built using QTopic
 * [`qtopic-api`](https://github.com/tapasweni-pathak/qtopic-api) – A REST API to get topic realted data from Quora.
-* [pyquora](https://github.com/tapaswenipathak/pyQuora) - A package to parse Quora.
+* [`quora`](https://github.com/tapaswenipathak/quora) - A package to parse Quora.
 
 
 ## Installation
