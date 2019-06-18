@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/-pyQTopic-blueviolet.svg)
 
 # qtopic 
-======
+
 [![GitHub issues](https://img.shields.io/github/issues/tapaswenipathak/pyQTopic.svg)](https://github.com/tapaswenipathak/pyQTopic/issues)
 [![GitHub forks](https://img.shields.io/github/forks/tapaswenipathak/pyQTopic.svg)](https://github.com/tapaswenipathak/pyQTopic/network)
 [![GitHub stars](https://img.shields.io/github/stars/tapaswenipathak/pyQTopic.svg)](https://github.com/tapaswenipathak/pyQTopic/stargazers)
